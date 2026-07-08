@@ -1,28 +1,33 @@
 import streamlit as st
-import pandas as pd
-from data_processor import filtrar_datos  # Importamos tu módulo de filtrado
 
-# Configuración de la página
-st.set_page_config(page_title="Sentinela Core", layout="wide")
+# Configuración de seguridad: Define tu usuario y contraseña
+USER_CORRECT = "admin"
+PASS_CORRECT = "sentinela2026"
 
-st.title("🛡️ Sentinela Core - Panel de Control")
+def check_password():
+    """Devuelve True si el usuario ingresó la contraseña correcta."""
+    if "password_correct" not in st.session_state:
+        st.session_state.password_correct = False
 
-# Simulamos carga de datos (En el futuro, aquí conectarás a tu base o API)
-data = [
-    {"id": 1, "status": "activo", "valor": 100},
-    {"id": 2, "status": "inactivo", "valor": 50},
-    {"id": 3, "status": "activo", "valor": 200}
-]
+    if st.session_state.password_correct:
+        return True
 
-st.sidebar.header("Filtros de Sistema")
-filtro = st.sidebar.selectbox("Seleccionar Estado", ["activo", "inactivo"])
+    # Formulario de login
+    login_container = st.container()
+    with login_container:
+        st.subheader("🔒 Acceso Restringido - Sentinela Core")
+        username = st.text_input("Usuario")
+        password = st.text_input("Contraseña", type="password")
+        if st.button("Ingresar"):
+            if username == USER_CORRECT and password == PASS_CORRECT:
+                st.session_state.password_correct = True
+                st.rerun()
+            else:
+                st.error("Credenciales incorrectas")
+    return False
 
-# Ejecución del procesador
-if st.button("Ejecutar Análisis"):
-    resultado = filtrar_datos(data, "status", filtro)
-    st.write("Resultados filtrados:", pd.DataFrame(resultado))
-else:
-    st.info("Presiona el botón para procesar los datos.")
-
-# Esto mantiene al servicio "vivo" y reportando actividad
-st.sidebar.success("Sistema Sentinela Online")
+# Ejecución principal
+if check_password():
+    st.title("🛡️ Sentinela Core - Panel de Control")
+    st.write("Bienvenido al sistema protegido.")
+    # Aquí iría el resto de tu código de análisis...
