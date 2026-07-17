@@ -6,7 +6,8 @@ from core.logger import logger
 from services.data_service import obtener_datos_demo
 from utils.helpers import obtener_fecha_actual
 
-st.set_page_config(
+st.set_page_config(with open("assets/css/style.css") as css:
+    st.markdown(f"<style>{css.read()}</style>", unsafe_allow_html=True)
     page_title=APP_NAME,
     page_icon="🛡️",
     layout="wide",
