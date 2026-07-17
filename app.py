@@ -44,5 +44,20 @@ st.plotly_chart(fig, use_container_width=True)
 st.dataframe(df, use_container_width=True)
 
 with st.sidebar:
-    st.header("Centro de Control")
-    st.success("Sistema Operativo")
+    st.title("🛡️ SENTINELA-CORE")
+
+    st.markdown("---")
+
+    pagina = st.radio(
+        "Navegación",
+        [
+            "📊 Dashboard",
+            "📁 Datos",
+            "📈 Análisis",
+            "⚙ Configuración",
+            "ℹ Acerca de",
+        ],
+    )
+
+    st.markdown("---")
+    st.caption("Versión 1.0.0")
