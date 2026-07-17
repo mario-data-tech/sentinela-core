@@ -1,0 +1,19 @@
+/* Título principal */
+h1 {
+    color: #00C8FF;
+    font-weight: 700;
+}
+
+/* Tarjetas de métricas */
+[data-testid="stMetric"] {
+    border: 1px solid #2A2F45;
+    border-radius: 12px;
+    padding: 15px;
+    background-color: #1E2433;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #161B22;
+}
