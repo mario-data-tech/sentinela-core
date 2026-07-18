@@ -1,63 +1,7 @@
 import streamlit as st
-import plotly.express as px
+from components.kpi_card import mostrar_kpi
+from models.dashboard import Kpi
 
-from config.settings import APP_NAME, APP_VERSION
-from core.logger import logger
-from services.data_service import obtener_datos_demo
-from utils.helpers import obtener_fecha_actual
-
-st.set_page_config(with open("assets/css/style.css") as css:
-    st.markdown(f"<style>{css.read()}</style>", unsafe_allow_html=True)
-    page_title=APP_NAME,
-    page_icon="🛡️",
-    layout="wide",
-)
-
-logger.info("SENTINELA-CORE iniciado")
-
-st.title("🛡️ SENTINELA-CORE")
-st.caption(f"Versión {APP_VERSION}")
-
-st.write(f"Última actualización: {obtener_fecha_actual()}")
-
-st.divider()
-
-df = obtener_datos_demo()
-
-col1, col2, col3 = st.columns(3)
-
-col1.metric("Eventos", len(df))
-col2.metric("Alertas", int(df["Cantidad"].sum()))
-col3.metric("Estado", "Operativo")
-
-st.divider()
-
-fig = px.bar(
-    df,
-    x="Categoría",
-    y="Cantidad",
-    title="Distribución de Eventos"
-)
-
-st.plotly_chart(fig, use_container_width=True)
-
-st.dataframe(df, use_container_width=True)
-
-with st.sidebar:
-    st.title("🛡️ SENTINELA-CORE")
-
-    st.markdown("---")
-
-    pagina = st.radio(
-        "Navegación",
-        [
-            "📊 Dashboard",
-            "📁 Datos",
-            "📈 Análisis",
-            "⚙ Configuración",
-            "ℹ Acerca de",
-        ],
-    )
-
-    st.markdown("---")
-    st.caption("Versión 1.0.0")
+# Ejemplo de uso
+mi_kpi = Kpi(nombre="Alertas Activas", valor="12", estado="crítico")
+mostrar_kpi(mi_kpi.nombre, mi_kpi.valor)
