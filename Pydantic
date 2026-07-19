@@ -1,0 +1,24 @@
+import os
+from pydantic_settings import BaseSettings
+from typing import Optional
+
+class Settings(BaseSettings):
+    """Configuración global del sistema utilizando Pydantic."""
+    APP_NAME: str = "SENTINELA-CORE"
+    VERSION: str = "3.0.0"
+    ENVIRONMENT: str = "development"
+    
+    # Rutas base
+    BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    LOG_DIR: str = os.path.join(BASE_DIR, "logs")
+    DATA_DIR: str = os.path.join(BASE_DIR, "data")
+    
+    # Configuración de seguridad (ejemplos)
+    SECRET_KEY: str = "super-secret-key-change-in-production"
+    DEBUG: bool = True
+    
+    class Config:
+        env_file = ".env"
+
+# Instancia global de configuración
+settings = Settings()
