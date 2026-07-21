@@ -1,20 +1,29 @@
 import streamlit as st
 
 def render_sidebar():
-    """Renderiza la barra lateral de navegación y configuración."""
     with st.sidebar:
-        st.image("assets/images/logo.png", use_column_width=True) # Requiere archivo
-        st.title("🛡️ Sentinela Core")
-        st.markdown("---")
-        
-        st.write("### Navegación")
-        page = st.radio("Ir a:", ["Dashboard", "Analítica", "Configuración"])
+        st.image("https://img.icons8.com/fluency/96/shield.png", width=64)
+        st.title("SENTINELA-CORE")
+        st.caption("v2.4.0 - Enterprise Edition")
         
         st.markdown("---")
-        st.write("### Estado del Sistema")
-        st.status("Conectado", expanded=True)
+        
+        # Menú de navegación principal
+        st.subheader("Navegación")
+        selected_page = st.radio(
+            "Seleccione un módulo",
+            ["📊 Dashboard", "📡 Monitoreo", "🚨 Alertas", "🖥️ Activos", "📈 Reportes", "⚙️ Configuración", "🛠️ Administración"],
+            label_visibility="collapsed"
+        )
         
         st.markdown("---")
-        st.write("© 2026 SENTINELA-CORE")
         
-    return page
+        # Filtros rápidos o estado de sesión en la barra lateral
+        st.subheader("Filtros Globales")
+        st.selectbox("Entorno", ["Producción", "Staging", "Desarrollo"])
+        st.slider("Rango de tiempo (horas)", 1, 24, 6)
+        
+        st.markdown("---")
+        st.markdown("🟢 **Conectado al Nodo Central**")
+        
+        return selected_page
