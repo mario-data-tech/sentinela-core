@@ -1,38 +1,41 @@
 import streamlit as st
-import plotly.express as px
 import pandas as pd
-from services.data_service import DataService
+import numpy as np
 
 def render_dashboard():
-    """Renderiza el Dashboard Ejecutivo con visualizaciones interactivas."""
-    st.header("📊 Panel de Control Ejecutivo")
+    st.subheader("📊 Panel General de Operaciones")
     
-    # Simulación de carga de datos para el dashboard
-    try:
-        # Aquí se integrarían los datos reales procesados por DataService
-        data = {
-            'Categoría': ['Seguridad', 'Rendimiento', 'Red', 'Almacenamiento'],
-            'Valor': [85, 92, 78, 88]
-        }
-        df = pd.DataFrame(data)
+    # Simulación de datos para gráficos en tiempo real
+    chart_data = pd.DataFrame(
+        np.random.randn(20, 3),
+        columns=["Eventos de Red", "Intentos de Acceso", "Anomalías Detectadas"]
+    )
+    
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        st.markdown("##### 📈 Tendencia de Eventos (Últimas 24 Horas)")
+        st.line_chart(chart_data)
         
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.write("### Distribución de KPIs")
-            fig = px.pie(df, values='Valor', names='Categoría', hole=0.3)
-            st.plotly_chart(fig, use_container_width=True)
-            
-        with col2:
-            st.write("### Tendencia de Rendimiento")
-            fig_bar = px.bar(df, x='Categoría', y='Valor', color='Categoría')
-            st.plotly_chart(fig_bar, use_container_width=True)
-            
-        st.write("### Resumen de Datos")
-        st.dataframe(df, use_container_width=True)
-        
-    except Exception as e:
-        st.error(f"Error al cargar el dashboard: {e}")
+    with col2:
+        st.markdown("##### 🌐 Distribución Geográfica")
+        # Simulación de un mapa o métricas por región
+        regions_data = pd.DataFrame({
+            "Región": ["Norteamérica", "Europa", "Latinoamérica", "Asia-Pacífico"],
+            "Incidentes": [12, 8, 24, 5]
+        })
+        st.dataframe(regions_data, hide_index=True, use_container_width=True)
 
-if __name__ == "__main__":
-    render_dashboard()
+    st.markdown("---")
+    
+    # Tabla de Alertas Recientes con Severidad
+    st.markdown("##### 🚨 Alertas Recientes y Severidad")
+    alerts_data = pd.DataFrame({
+        "ID Alerta": ["ALT-9021", "ALT-9022", "ALT-9023", "ALT-9024"],
+        "Timestamp": ["2026-07-20 21:15:02", "2026-07-20 21:18:45", "2026-07-20 21:22:10", "2026-07-20 21:25:30"],
+        "Origen": ["192.168.1.45", "10.0.4.12", "172.16.8.99", "192.168.2.11"],
+        "Tipo": ["Fuerza Bruta", "Tráfico Anómalo", "Inyección SQL", "Puerto Abierto"],
+        "Severidad": ["🔴 Crítica", "🟠 Alta", "🟡 Media", "🟢 Baja"]
+    })
+    
+    st.dataframe(alerts_data, hide_index=True, use_container_width=True)
