@@ -1,8 +1,3 @@
-# 📊 Nombre de tu Proyecto (ej. Dashboard de Datos)
-
-Breve descripción de tu proyecto. Explica qué hace, qué problema resuelve o qué tipo de datos analiza.
-
----
 
 ## 🛠️ Estructura del Repositorio
 
